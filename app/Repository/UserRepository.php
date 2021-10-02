@@ -4,10 +4,9 @@ namespace App\Repository\UserRepository;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\Auth\Factory;
+use App\Helper\Utils as utils;
 class UserRepository
 {
     public function register($request)
@@ -33,7 +32,7 @@ class UserRepository
     {
         try{
             $credentials = $request->only(['email', 'password']);
-            if (! $token = Auth::attempt($credentials)) {
+            if (!$token = Auth::attempt($credentials)) {
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
             return $this->respondWithToken($token);
@@ -42,10 +41,20 @@ class UserRepository
         }
     }
 
-    private function returnErrorMessage(){
-        return response()->json([
-            'message' => 'Something wrong'
-        ],404);
+    public function profile()
+    {
+        return response()->json(Auth::user());
+    }
+
+    public function logout()
+    {
+        Auth::guard()->logout();
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function refresh()
+    {
+        return $this->respondWithToken(Auth::guard()->refresh());
     }
 
     private function respondWithToken($token)
@@ -55,5 +64,11 @@ class UserRepository
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    private function returnErrorMessage(){
+        return response()->json([
+            'message' => 'Something wrong'
+        ],404);
     }
 }
