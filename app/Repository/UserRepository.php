@@ -6,7 +6,6 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Helper\Utils as utils;
 class UserRepository
 {
     public function register($request)
