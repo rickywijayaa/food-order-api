@@ -8,6 +8,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class UserRepository
 {
+    public function GetUser(){
+        try
+        {
+            $data = User::get(['name','email']);
+            return response()->json([
+                "message" => "Successfully Get Users",
+                "data" => $data
+            ],200);
+        }
+        catch(Exception $ex)
+        {
+            $this->returnErrorMessage();
+        }
+    }
+
     public function register($request)
     {
         try{
@@ -32,7 +47,7 @@ class UserRepository
         try{
             $credentials = $request->only(['email', 'password']);
             if (!$token = Auth::attempt($credentials)) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+                return response()->json(['message' => 'Email / Password salah'], 401);
             }
             return $this->respondWithToken($token);
         }catch(Exception $ex){

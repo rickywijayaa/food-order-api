@@ -16,6 +16,10 @@ class UserController extends Controller
         $this->middleware('auth')->except('register','login');
     }
 
+    public function getUser(){
+        return $this->userRepository->GetUser();
+    }
+
     public function register(Request $request)
     {
         return $this->userRepository->register($request);

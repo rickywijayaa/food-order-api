@@ -23,6 +23,7 @@ Route::post("/register",[UserController::class,'register'])->name("register");
 Route::post("/login",[UserController::class,'login'])->name("login");
 
 Route::middleware(['auth'])->group(function () {
+    Route::get("/users",[UserController::class,'getUser'])->name('getUser');
     Route::get("/profile",[UserController::class,'profile'])->name('profile');
     Route::post("/logout",[UserController::class,'logout'])->name('logout');
     Route::get("/refresh",[UserController::class,'refresh'])->name('refresh');
