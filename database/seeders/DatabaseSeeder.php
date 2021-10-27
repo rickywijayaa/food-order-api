@@ -30,5 +30,12 @@ class DatabaseSeeder extends Seeder
                 'isAdmin' => 1
             ]);
         }
+
+        DB::table('users')->insert([
+            'name' => 'Karyawan',
+            'email' => 'karyawan@gmail.com',
+            'password' => Hash::make('12345678'),
+            'isAdmin' => 0
+        ]);
     }
 }
