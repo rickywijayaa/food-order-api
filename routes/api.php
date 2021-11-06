@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,13 @@ Route::post("/register",[UserController::class,'register'])->name("register");
 Route::post("/login",[UserController::class,'login'])->name("login");
 
 Route::middleware(['auth'])->group(function () {
-    Route::get("/users",[UserController::class,'getUser'])->name('getUser');
-    Route::get("/profile",[UserController::class,'profile'])->name('profile');
-    Route::post("/logout",[UserController::class,'logout'])->name('logout');
-    Route::get("/refresh",[UserController::class,'refresh'])->name('refresh');
+    Route::get("/users",[UserController::class,'getUser'])->name("get-user");
+    Route::get("/profile",[UserController::class,'profile'])->name("profile");
+    Route::post("/logout",[UserController::class,'logout'])->name("logout");
+    Route::get("/refresh",[UserController::class,'refresh'])->name("refresh");
+    
+    Route::post("/create-category",[CategoryController::class,"create"])->name("create-category");
+    Route::post("/update-category/{id}",[CategoryController::class,"update"])->name("update-category");
+    Route::post("/delete-category/{id}",[CategoryController::class,"delete"])->name("delete-category");
+
 });

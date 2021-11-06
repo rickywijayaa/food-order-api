@@ -19,11 +19,11 @@ class UserRepository
         }
         catch(Exception $ex)
         {
-            $this->returnErrorMessage();
+            $this->ReturnErrorMessage();
         }
     }
 
-    public function register($request)
+    public function Register($request)
     {
         try{
             $data = User::create([
@@ -38,11 +38,11 @@ class UserRepository
                 "data" => $data
             ],201);
         }catch(Exception $ex){
-            $this->returnErrorMessage();
+            $this->ReturnErrorMessage();
         }
     }
 
-    public function login($request)
+    public function Login($request)
     {
         try{
             $credentials = $request->only(['email', 'password']);
@@ -51,27 +51,27 @@ class UserRepository
             }
             return $this->respondWithToken($token);
         }catch(Exception $ex){
-            $this->returnErrorMessage();
+            $this->ReturnErrorMessage();
         }
     }
 
-    public function profile()
+    public function Profile()
     {
         return response()->json(Auth::user());
     }
 
-    public function logout()
+    public function Logout()
     {
         Auth::guard()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function refresh()
+    public function Refresh()
     {
-        return $this->respondWithToken(Auth::guard()->refresh());
+        return $this->RespondWithToken(Auth::guard()->refresh());
     }
 
-    private function respondWithToken($token)
+    private function RespondWithToken($token)
     {
         return response()->json([
             'access_token' => $token,
@@ -80,7 +80,7 @@ class UserRepository
         ]);
     }
 
-    private function returnErrorMessage(){
+    private function ReturnErrorMessage(){
         return response()->json([
             'message' => 'Something wrong'
         ],404);

@@ -4,27 +4,84 @@ namespace App\Repository\CategoryRepository;
 
 use App\Models\Category;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryRepository 
 {
     public function CreateCategory($request)
     {
         try{
-            $data = Category::create($request);
+            $validator =  Validator::make($request->all(),[
+            'name' => 'required',
+            ]);
+            
+            if($validator->fails()){
+                return response()->json([
+                    "error" => 'validation_error',
+                    "message" => $validator->errors(),
+                ], 422);
+            }
+
+            $data = Category::create($request->All());
 
             return response()->json([
-                "message" => "Successfully register",
+                "message" => "Successfully Create",
                 "data" => $data
             ],201);
         }catch(Exception $ex){
-            $this->returnErrorMessage();
+            return response()->json([
+                "message" => "Failed to Create",
+                "data" => []
+            ],400);
         }
-        Category::create($request);
     }
 
-    private function returnErrorMessage(){
-        return response()->json([
-            'message' => 'Something wrong'
-        ],404);
+    public function UpdateCategory($request,$id)
+    {
+        try{
+            $validator =  Validator::make($request->all(),[
+                'name' => 'required',
+            ]);
+                
+            if($validator->fails()){
+                return response()->json([
+                    "error" => 'validation_error',
+                    "message" => $validator->errors(),
+                ], 422);
+            }
+
+            $data = $request->all();
+            $query = Category::findOrFail($id);
+
+            $query->update($data);
+            return response()->json([
+                "message" => "Successfully Update",
+                "data" => $query
+            ],201);
+        }
+        catch (Exception $ex){
+            return response()->json([
+                "message" => "Id Not Found",
+                "data" => []
+            ],400);
+        }
+    }
+
+    public function DeleteCategory($id){
+        try{
+            $data = Category::findOrFail($id);
+            $data->delete();
+
+            return response()->json([
+                "message" => "Successfully Update",
+                "data" => $data
+            ],201);
+        }
+        catch(Exception $ex){
+            return response()->json([
+                "message" => "Id Not Found",
+                "data" => []
+            ],400);
+        }
     }
 }

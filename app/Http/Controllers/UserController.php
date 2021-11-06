@@ -22,26 +22,26 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        return $this->userRepository->register($request);
+        return $this->userRepository->Register($request);
     }
 
     public function login(Request $request)
     {
-        return $this->userRepository->login($request);
+        return $this->userRepository->Login($request);
     }
 
     public function logout()
     {
-        return $this->userRepository->logout();
+        return $this->userRepository->Logout();
     }
 
     public function refresh()
     {
-        return $this->userRepository->refresh();
+        return $this->userRepository->Refresh();
     }
 
     public function profile()
     {
-        return $this->userRepository->profile();
+        return $this->userRepository->Profile();
     }
 }
