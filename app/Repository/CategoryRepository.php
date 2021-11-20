@@ -8,17 +8,26 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryRepository 
 {
+    public function GetCategory()
+    {
+        $data = Category::get();
+        return response()->json([
+            "message" => "Successfully Get",
+            "data" => $data,
+        ],200);
+    }
+
     public function CreateCategory($request)
     {
         try{
             $validator =  Validator::make($request->all(),[
-            'name' => 'required',
+                'name' => 'required',
             ]);
             
             if($validator->fails()){
                 return response()->json([
-                    "error" => 'validation_error',
                     "message" => $validator->errors(),
+                    "data" => [],
                 ], 422);
             }
 
@@ -45,8 +54,8 @@ class CategoryRepository
                 
             if($validator->fails()){
                 return response()->json([
-                    "error" => 'validation_error',
                     "message" => $validator->errors(),
+                    "data" => [],
                 ], 422);
             }
 

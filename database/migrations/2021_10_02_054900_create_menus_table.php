@@ -19,12 +19,8 @@ class CreateMenusTable extends Migration
             $table->longText("description");
             $table->integer("price");
             $table->string("image");
-            $table->unsignedBigInteger("categories_id");
             $table->boolean("isAvailable")->default(1);
             $table->timestamps();
-
-            $table->foreign("categories_id")
-                ->references("id")->on("categories");
         });
     }
 

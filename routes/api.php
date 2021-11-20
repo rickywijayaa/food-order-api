@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +30,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post("/logout",[UserController::class,'logout'])->name("logout");
     Route::get("/refresh",[UserController::class,'refresh'])->name("refresh");
     
+    Route::get("/category",[CategoryController::class,"index"])->name("get-category");
     Route::post("/create-category",[CategoryController::class,"create"])->name("create-category");
     Route::post("/update-category/{id}",[CategoryController::class,"update"])->name("update-category");
     Route::post("/delete-category/{id}",[CategoryController::class,"delete"])->name("delete-category");
 
+    Route::get("/menu",[MenuController::class,"index"])->name("get-menu");
+    Route::post('/create-menu',[MenuController::class,"create"])->name("create-menu");
 });

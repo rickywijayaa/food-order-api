@@ -16,6 +16,10 @@ class CategoryController extends Controller
         $this->middleware('auth')->except('register','login');
     }
 
+    public function index(){
+        return $this->categoryRepostiroy->GetCategory();
+    }
+
     public function create(Request $request){
         return $this->categoryRepostiroy->CreateCategory($request);
     }
