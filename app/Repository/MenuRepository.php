@@ -37,8 +37,10 @@ class MenuRepository{
                 "data" => [],
             ], 422);
         }
-        
+
         $data = $request->all();
+
+        $decoded_json_categories = json_decode($data['categories'], true);
 
         $menuId = "";
         if($request->hasFile("image")){
@@ -55,10 +57,10 @@ class MenuRepository{
             $menuId = $result;
         }
 
-        for($i = 0; $i < count($data["categories"]); $i++){
+        for($i = 0; $i < count($decoded_json_categories); $i++){
             CategoryMenu::create([
                "menu_id" => $menuId,
-               "category_id" =>  $data["categories"][$i]
+               "category_id" =>  $decoded_json_categories[$i]["id"]
             ]);
         }
 
@@ -82,14 +84,16 @@ class MenuRepository{
         $menu = Menu::findOrFail($id);
         $menu->update($data);
 
-        if(count($data["categories"]) > 0 ){
+        $decoded_json_categories = json_decode($data['categories'], true);
+
+        if(count($decoded_json_categories) > 0 ){
             CategoryMenu::where("menu_id",$id)->delete();
         }
 
-        for($i = 0; $i < count($data["categories"]); $i++){
+        for($i = 0; $i < count($decoded_json_categories); $i++){
             CategoryMenu::create([
                 "menu_id" => $id,
-                "category_id" =>  $data["categories"][$i]
+                "category_id" =>  $decoded_json_categories[$i]["id"]
             ]);
         }
 
