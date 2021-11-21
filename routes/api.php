@@ -32,9 +32,13 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get("/category",[CategoryController::class,"index"])->name("get-category");
     Route::post("/create-category",[CategoryController::class,"create"])->name("create-category");
+    Route::get("/category/{id}",[CategoryController::class,"getCategoryById"])->name("get-category-by-id");
     Route::post("/update-category/{id}",[CategoryController::class,"update"])->name("update-category");
     Route::post("/delete-category/{id}",[CategoryController::class,"delete"])->name("delete-category");
 
     Route::get("/menu",[MenuController::class,"index"])->name("get-menu");
+    Route::get("/menu/{id}",[MenuController::class,"getMenuById"])->name("get-menu-by-id");
     Route::post('/create-menu',[MenuController::class,"create"])->name("create-menu");
+    Route::post('/update-menu/{id}',[MenuController::class,"update"])->name("update-menu");
+    Route::post("/delete-menu/{id}",[MenuController::class,"delete"])->name("delete-menu");
 });

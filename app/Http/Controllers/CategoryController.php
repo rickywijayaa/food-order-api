@@ -9,26 +9,30 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    private $categoryRepostiroy;
-    public function __construct(CategoryRepository $categoryRepostiroy)
+    private $categoryRepository;
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->categoryRepostiroy = $categoryRepostiroy;
+        $this->categoryRepository = $categoryRepository;
         $this->middleware('auth')->except('register','login');
     }
 
     public function index(){
-        return $this->categoryRepostiroy->GetCategory();
+        return $this->categoryRepository->GetCategory();
     }
 
     public function create(Request $request){
-        return $this->categoryRepostiroy->CreateCategory($request);
+        return $this->categoryRepository->CreateCategory($request);
+    }
+
+    public function getCategoryById($id){
+        return $this->categoryRepository->GetCategoryById($id);
     }
 
     public function update(Request $request,$id){
-        return $this->categoryRepostiroy->UpdateCategory($request,$id);
+        return $this->categoryRepository->UpdateCategory($request,$id);
     }
 
     public function delete($id){
-        return $this->categoryRepostiroy->DeleteCategory($id);
+        return $this->categoryRepository->DeleteCategory($id);
     } 
 }

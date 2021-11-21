@@ -45,6 +45,15 @@ class CategoryRepository
         }
     }
 
+    public function GetCategoryById($id){
+        $data = Category::findOrFail($id);
+
+        return response()->json([
+            "message" => "Successfully Get Category By Id",
+            "data" => $data
+        ],200);
+    }
+
     public function UpdateCategory($request,$id)
     {
         try{

@@ -21,4 +21,16 @@ class MenuController extends Controller
     public function create(Request $request){
         return $this->menuRepository->CreateMenu($request);
     }
+
+    public function getMenuById($id){
+        return $this->menuRepository->GetMenuById($id);
+    }
+
+    public function update(Request $request , $id){
+        return $this->menuRepository->UpdateMenu($request,$id);
+    }
+
+    public function delete($id){
+        return $this->menuRepository->DeleteMenu($id);
+    } 
 }
