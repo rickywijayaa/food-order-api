@@ -77,7 +77,13 @@ class CategoryRepository
             $data = $request->all();
             $query = Category::findOrFail($id);
 
-            $query->update($data);
+            $query->update([
+                "name" => $data["name"],
+                "image" => $request->hasFile("image") ? 
+                url("/storage")."/".$request->file('image')->store("menu","public") :
+                $query["image"],
+            ]);
+
             return response()->json([
                 "message" => "Successfully Update",
                 "data" => $query

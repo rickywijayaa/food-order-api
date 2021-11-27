@@ -90,9 +90,19 @@ class MenuRepository{
     public function UpdateMenu($request,$id){
         $data = $request->all();
         $menu = Menu::findOrFail($id);
-        $menu->update($data);
 
         $decoded_json_categories = json_decode($data['categories'], true);
+
+        $menu->update([
+            "name" => $data["name"],
+            "description" => $data["description"],
+            "category" => $decoded_json_categories,
+            "price" => $data["price"],
+            "image" => $request->hasFile("image") ? 
+                    url("/storage")."/".$request->file('image')->store("menu","public") :
+                    $menu["image"],
+            "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
+        ]);
 
         if(count($decoded_json_categories) > 0 ){
             CategoryMenu::where("menu_id",$id)->delete();
@@ -105,9 +115,20 @@ class MenuRepository{
             ]);
         }
 
+        $dataJson = [
+            "name" => $data["name"],
+            "description" => $data["description"],
+            "category" => $decoded_json_categories,
+            "price" => $data["price"],
+            "image" => $request->hasFile("image") ? 
+                   url("/storage")."/".$request->file('image')->store("menu","public") :
+                   $menu["image"],
+            "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
+       ];
+
         return response()->json([
             "message" => "Successfully Update Menu",
-            "data" => $data,
+            "data" => $dataJson,
         ],201);
     }
 
