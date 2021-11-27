@@ -46,7 +46,7 @@ class CategoryRepository
     }
 
     public function GetCategoryById($id){
-        $data = Category::findOrFail($id);
+        $data = Category::with("menu")->findOrFail($id);
 
         return response()->json([
             "message" => "Successfully Get Category By Id",
