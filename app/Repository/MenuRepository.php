@@ -22,21 +22,21 @@ class MenuRepository{
     }
 
     public function CreateMenu($request){
-        $validator =  Validator::make($request->all(),[
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'image' => 'required',
-            'categories' => 'required',
-            'isAvailable' => 'required'
-        ]);
+        // $validator =  Validator::make($request->all(),[
+        //     'name' => 'required',
+        //     'description' => 'required',
+        //     'price' => 'required',
+        //     'image' => 'required',
+        //     'categories' => 'required',
+        //     'isAvailable' => 'required'
+        // ]);
             
-        if($validator->fails()){
-            return response()->json([
-                "message" => $validator->errors(),
-                "data" => [],
-            ], 422);
-        }
+        // if($validator->fails()){
+        //     return response()->json([
+        //         "message" => $validator->errors(),
+        //         "data" => [],
+        //     ], 422);
+        // }
 
         $data = $request->all();
 
@@ -51,7 +51,7 @@ class MenuRepository{
                 "description" => $data["description"],
                 "price" => $data["price"],
                 "image" => $image->store("menu","public"),
-                "isAvailable" => $data["isAvailable"]
+                "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
             ])->id;
 
             $menuId = $result;
@@ -64,9 +64,18 @@ class MenuRepository{
             ]);
         }
 
+        $dataJson = [
+             "name" => $data["name"],
+             "description" => $data["description"],
+             "category" => $decoded_json_categories,
+             "price" => $data["price"],
+             "image" => $data["image"],
+             "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
+        ];
+
         return response()->json([
             "message" => "Successfully Create Menu",
-            "data" => $data,
+            "data" => $dataJson,
         ],201);
     }
 
