@@ -43,19 +43,17 @@ class MenuRepository{
         $decoded_json_categories = json_decode($data['categories'], true);
 
         $menuId = "";
-        if($request->hasFile("image")){
-            $image = $request->file('image');
+        $result = Menu::create([
+            "name" => $data["name"],
+            "description" => $data["description"],
+            "price" => $data["price"],
+            "image" => $request->hasFile("image") ? 
+                    url("/storage")."/".$request->file('image')->store("menu","public") :
+                    "menu/placeholder.jpg",
+            "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
+        ])->id;
 
-            $result = Menu::create([
-                "name" => $data["name"],
-                "description" => $data["description"],
-                "price" => $data["price"],
-                "image" => $image->store("menu","public"),
-                "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
-            ])->id;
-
-            $menuId = $result;
-        }
+        $menuId = $result;
 
         for($i = 0; $i < count($decoded_json_categories); $i++){
             CategoryMenu::create([
@@ -69,7 +67,9 @@ class MenuRepository{
              "description" => $data["description"],
              "category" => $decoded_json_categories,
              "price" => $data["price"],
-             "image" => $data["image"],
+             "image" => $request->hasFile("image") ? 
+                    url("/storage")."/".$request->file('image')->store("menu","public") :
+                    "menu/placeholder.jpg",
              "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
         ];
 
