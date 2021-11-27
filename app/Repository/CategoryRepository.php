@@ -22,6 +22,7 @@ class CategoryRepository
         try{
             $validator =  Validator::make($request->all(),[
                 'name' => 'required',
+                'image' => 'required'
             ]);
             
             if($validator->fails()){
@@ -31,7 +32,12 @@ class CategoryRepository
                 ], 422);
             }
 
-            $data = Category::create($request->All());
+            $data = Category::create([
+                "name" => $request->all()["name"],
+                "image" => $request->hasFile("image") ? 
+                url("/storage")."/".$request->file('image')->store("menu","public") :
+                url("/storage")."/"."menu/placeholder.jpg",
+            ]);
 
             return response()->json([
                 "message" => "Successfully Create",

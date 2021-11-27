@@ -22,21 +22,20 @@ class MenuRepository{
     }
 
     public function CreateMenu($request){
-        // $validator =  Validator::make($request->all(),[
-        //     'name' => 'required',
-        //     'description' => 'required',
-        //     'price' => 'required',
-        //     'image' => 'required',
-        //     'categories' => 'required',
-        //     'isAvailable' => 'required'
-        // ]);
+        $validator =  Validator::make($request->all(),[
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'categories' => 'required',
+            'isAvailable' => 'required'
+        ]);
             
-        // if($validator->fails()){
-        //     return response()->json([
-        //         "message" => $validator->errors(),
-        //         "data" => [],
-        //     ], 422);
-        // }
+        if($validator->fails()){
+            return response()->json([
+                "message" => $validator->errors(),
+                "data" => [],
+            ], 422);
+        }
 
         $data = $request->all();
 
@@ -49,7 +48,7 @@ class MenuRepository{
             "price" => $data["price"],
             "image" => $request->hasFile("image") ? 
                     url("/storage")."/".$request->file('image')->store("menu","public") :
-                    "menu/placeholder.jpg",
+                    url("/storage")."/"."menu/placeholder.jpg",
             "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
         ])->id;
 
@@ -69,7 +68,7 @@ class MenuRepository{
              "price" => $data["price"],
              "image" => $request->hasFile("image") ? 
                     url("/storage")."/".$request->file('image')->store("menu","public") :
-                    "menu/placeholder.jpg",
+                    url("/storage")."/"."menu/placeholder.jpg",
              "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
         ];
 
