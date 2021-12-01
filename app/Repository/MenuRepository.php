@@ -62,14 +62,15 @@ class MenuRepository{
         }
 
         $dataJson = [
-             "name" => $data["name"],
-             "description" => $data["description"],
-             "category" => $decoded_json_categories,
-             "price" => $data["price"],
-             "image" => $request->hasFile("image") ? 
+            "id" => $menuId,
+            "name" => $data["name"],
+            "description" => $data["description"],
+            "category" => $decoded_json_categories,
+            "price" => $data["price"],
+            "image" => $request->hasFile("image") ? 
                     url("/storage")."/".$request->file('image')->store("menu","public") :
                     url("/storage")."/"."menu/placeholder.jpg",
-             "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
+            "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
         ];
 
         return response()->json([
