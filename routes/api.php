@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,4 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/create-menu',[MenuController::class,"create"])->name("create-menu");
     Route::post('/update-menu/{id}',[MenuController::class,"update"])->name("update-menu");
     Route::post("/delete-menu/{id}",[MenuController::class,"delete"])->name("delete-menu");
+
+    Route::get("/order",[OrderController::class,"index"])->name("get-order");
+    Route::get("/order/{id}",[OrderController::class,"getOrderById"])->name("get-order-by-id");
 });

@@ -35,8 +35,8 @@ class CategoryRepository
             $data = Category::create([
                 "name" => $request->all()["name"],
                 "image" => $request->hasFile("image") ? 
-                url("/storage")."/".$request->file('image')->store("menu","public") :
-                url("/storage")."/"."menu/placeholder.jpg",
+                    url("/storage")."/".$request->file('image')->store("menu","public") :
+                    url("/storage")."/"."menu/placeholder.jpg",
             ]);
 
             return response()->json([
@@ -46,7 +46,7 @@ class CategoryRepository
         }catch(Exception $ex){
             return response()->json([
                 "message" => "Failed to Create",
-                "data" => []
+                "data" => $ex->getMessage()
             ],400);
         }
     }
