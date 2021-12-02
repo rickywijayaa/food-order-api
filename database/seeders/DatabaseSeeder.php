@@ -37,5 +37,19 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'isAdmin' => 0
         ]);
+
+        $category = [
+            'cat1',
+            'cat2',
+            'cat3',
+            'cat4'
+        ];
+
+        for($i=0; $i<4; $i++){
+            DB::table('categories')->insert([
+                'name' => $category[$i],
+                'image' => 'seed'
+            ]);
+        }
     }
 }

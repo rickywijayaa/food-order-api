@@ -52,4 +52,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function Menu(){
+        return $this->belongsToMany(Menu::class,"user_menus");
+    }
 }

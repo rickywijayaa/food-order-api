@@ -11,13 +11,17 @@ class Order extends Model
 
     protected $fillable = [
         'status',
-        'user_id',
-        'orders',
+        'users_id',
+        'menus_id',
         'totalPrice',
         'notes'
     ];
 
     public function User(){
         return $this->hasOne(User::class,"id","users_id");
+    }
+
+    public function Menu(){
+        return $this->hasMany(Menu::class,"id","menus_id");
     }
 }

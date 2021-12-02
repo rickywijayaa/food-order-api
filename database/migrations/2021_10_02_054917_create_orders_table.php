@@ -17,13 +17,16 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string("status");
             $table->unsignedBigInteger("users_id");
-            $table->string("orders");
+            $table->unsignedBigInteger("menus_id");
             $table->integer("totalPrice");
             $table->string("notes");
-            $table->timestamps();
+            $table->string("order_in_date");
 
             $table->foreign("users_id")
             ->references("id")->on("users");
+
+            $table->foreign("menus_id")
+            ->references("id")->on("menus");
         });
     }
 

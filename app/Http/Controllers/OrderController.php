@@ -19,6 +19,14 @@ class OrderController extends Controller
     }
 
     public function getOrderById($id){
-        return $this->orderRepository->getOrderById($id);
+        return $this->orderRepository->GetOrderById($id);
+    }
+
+    public function create(Request $request){
+        return $this->orderRepository->CreateOrder($request);
+    }
+
+    public function filterOrderByDate(Request $request){
+        return $this->orderRepository->FilterOrderByDate($request);
     }
 }
