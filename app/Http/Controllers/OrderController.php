@@ -29,4 +29,8 @@ class OrderController extends Controller
     public function filterOrderByDate(Request $request){
         return $this->orderRepository->FilterOrderByDate($request);
     }
+
+    public function getRecentOrder(){
+        return $this->orderRepository->GetRecentOrder();
+    }
 }

@@ -47,4 +47,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/order/{id}",[OrderController::class,"getOrderById"])->name("get-order-by-id");
     Route::post("/create-order",[OrderController::class,"create"])->name("create-order");
     Route::post("/filter-order",[OrderController::class,"filterOrderByDate"])->name("filter-order-by-date");
+    Route::get("/recent-order",[OrderController::class,"getRecentOrder"])->name("get-recent-order");
 });
