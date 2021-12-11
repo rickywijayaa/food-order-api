@@ -47,7 +47,7 @@ class OrderRepository {
     }
 
     public function GetRecentOrder(){
-        $data = Order::with("menu")->orderBy("order_in_date","desc")->take(10)->get();
+        $data = Order::with(["menu","user"])->orderBy("order_in_date","desc")->take(10)->get();
 
         return response()->json([
             "message" => "Successfully Get Order By Id",
@@ -58,31 +58,16 @@ class OrderRepository {
     public function CreateOrder($request){
         $data = $request->all();
 
-        // $validator =  Validator::make($request->all(),[
-        //     'users_id' => 'required',
-        //     'orders' => 'required',
-        //     'totalPrice' => 'required',
-        //     'notes' => 'required',
-        // ]);
-        
-        // if($validator->fails()){
-        //     return response()->json([
-        //         "message" => $validator->errors(),
-        //         "data" => [],
-        //     ], 422);
-        // }
+        $decoded_json_menu = json_decode($data['menu'], true);
 
-        // $decoded_json_menu = json_decode($data['menu'], true);
-
-        // for($i = 0; $i < count($decoded_json_menu); $i++){
-        //     Order::create([
-        //        "status" => $data["status"],
-        //        "users_id" =>  $data["users_id"],
-        //        "orders" => $decoded_json_menu[$i]["name"],
-        //        "totalPrice" => $data["totalPrice"],
-        //        "notes" => $data["notes"]
-        //     ]);
-        // }
+        for($i = 0; $i < count($decoded_json_menu); $i++){
+            Order::create([
+               "status" => "Paid",
+               "users_id" =>  $data["users_id"],
+               "menus_id" => $decoded_json_menu[$i],
+               "notes" => $data["notes"]
+            ]);
+        }
 
         $details = [
             'username' => explode("@", $data["email"])[0],
