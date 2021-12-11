@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderRepository {
     public function GetOrder(){
-        $data = Order::get();
+        $data = Order::with("user")->get();
 
         return response()->json([
             "message" => "Successfully Get",
@@ -24,7 +24,7 @@ class OrderRepository {
         //     $q->where('id', "=", $id);
         // })->with("user","menu")->get();
 
-        $data = Order::with("menu")->get();
+        $data = Order::findOrFail($id)->with("menu")->get();
 
         return response()->json([
             "message" => "Successfully Get Order By Id",
@@ -38,7 +38,7 @@ class OrderRepository {
         $data = Order::where([
             ["order_in_date",">=",$input["fromDate"]],
             ["order_in_date","<=",$input["toDate"]]]
-            )->get();
+            )->count();
 
         return response()->json([
             "message" => "Successfully Get Order By Id",
@@ -50,7 +50,6 @@ class OrderRepository {
         $data = $request->all();
 
         // $validator =  Validator::make($request->all(),[
-        //     'status' => 'required',
         //     'users_id' => 'required',
         //     'orders' => 'required',
         //     'totalPrice' => 'required',
