@@ -58,27 +58,27 @@ class OrderRepository {
     public function CreateOrder($request){
         $data = $request->all();
 
-        // $decoded_json_menu = json_decode($data['menu'], true);
+        $decoded_json_menu = json_decode($data['menu'], true);
 
 
-        // for($i = 0; $i < count($decoded_json_menu); $i++){
-        //     Order::create([
-        //        "status" => "Paid",
-        //        "users_id" =>  $data["users_id"],
-        //        "menus_id" => $decoded_json_menu[$i],
-        //        "notes" => $data["notes"],
-        //        "totalPrice" => $data["total_payment"]
-        //     ]);
-        // }
+        for($i = 0; $i < count($decoded_json_menu); $i++){
+            Order::create([
+               "status" => "Paid",
+               "users_id" =>  $data["users_id"],
+               "menus_id" => $decoded_json_menu[$i],
+               "notes" => $data["notes"],
+               "totalPrice" => $data["total_payment"]
+            ]);
+        }
 
         $details = [
             'username' => explode("@", $data["email"])[0],
-            // 'price' => $data["price"],
-            // 'tax_fee' => $data["tax_fee"],
-            // 'total_payment' => $data["total_payment"],
+            'price' => $data["price"],
+            'tax_fee' => $data["tax_fee"],
+            'total_payment' => $data["total_payment"],
             'menu_name' => $data["name"],
-            // "menu_image" => $decoded_json_menu_image,
-            // "menu_count" => $decoded_json_menu_count,
+            "menu_count" => $data["count"],
+            "menu_price" => $data["menu_price"]
         ];
 
         Mail::to($data["email"])->send(new SendEmailToUser($details));
