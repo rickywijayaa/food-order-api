@@ -41,6 +41,15 @@ class OrderRepository {
             )->count();
 
         return response()->json([
+            "message" => "Successfully Get Order By Date",
+            "data" => $data,
+        ],200);
+    }
+
+    public function GetRecentOrder(){
+        $data = Order::orderBy("order_in_date","desc")->take(10)->get();
+
+        return response()->json([
             "message" => "Successfully Get Order By Id",
             "data" => $data,
         ],200);
