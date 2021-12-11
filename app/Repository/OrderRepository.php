@@ -47,7 +47,7 @@ class OrderRepository {
     }
 
     public function GetRecentOrder(){
-        $data = Order::orderBy("order_in_date","desc")->take(10)->get();
+        $data = Order::with("menu")->orderBy("order_in_date","desc")->take(10)->get();
 
         return response()->json([
             "message" => "Successfully Get Order By Id",
