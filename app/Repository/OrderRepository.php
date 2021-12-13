@@ -129,16 +129,14 @@ class OrderRepository
     public function CreateOrder($request)
     {
         $data = $request->all();
-        dd($data);
-
+        
         $decoded_json_menu = json_decode($data['menu'], true);
-
 
         for ($i = 0; $i < count($decoded_json_menu); $i++) {
             Order::create([
                 "status" => "Paid",
                 "users_id" =>  $data["users_id"],
-                "menus_id" => $decoded_json_menu[$i],
+                "menus_id" => $decoded_json_menu[$i]["id"],
                 "notes" => $data["notes"],
                 "totalPrice" => $data["total_payment"]
             ]);

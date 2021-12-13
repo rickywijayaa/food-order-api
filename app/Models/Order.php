@@ -17,6 +17,8 @@ class Order extends Model
         'notes'
     ];
 
+    public $timestamps = false;
+
     public function User(){
         return $this->hasOne(User::class,"id","users_id");
     }
