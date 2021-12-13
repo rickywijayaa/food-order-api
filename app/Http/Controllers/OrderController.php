@@ -26,8 +26,8 @@ class OrderController extends Controller
         return $this->orderRepository->CreateOrder($request);
     }
 
-    public function filterOrderByDate(Request $request){
-        return $this->orderRepository->FilterOrderByDate($request);
+    public function filterOrderByMonth(){
+        return $this->orderRepository->FilterOrderByMonth();
     }
 
     public function getRecentOrder(){

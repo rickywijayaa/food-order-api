@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateOrdersTable extends Migration
@@ -20,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger("menus_id");
             $table->integer("totalPrice");
             $table->string("notes");
-            $table->string("order_in_date");
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->foreign("users_id")
             ->references("id")->on("users");
