@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/order",[OrderController::class,"index"])->name("get-order");
     Route::get("/order/{id}",[OrderController::class,"getOrderById"])->name("get-order-by-id");
     Route::post("/create-order",[OrderController::class,"create"])->name("create-order");
-    Route::get("/filter-order",[OrderController::class,"filterOrderByMonth"])->name("filter-order-by-month");
+    Route::get("/filter-month",[OrderController::class,"filterOrderByMonth"])->name("filter-order-by-month");
+    Route::get("/filter-week",[OrderController::class,"filterOrderByWeek"])->name("filter-order-by-week");
     Route::get("/recent-order",[OrderController::class,"getRecentOrder"])->name("get-recent-order");
 });

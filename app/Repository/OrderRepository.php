@@ -68,6 +68,38 @@ class OrderRepository
         ]);
     }
 
+    public function FilterOrderByWeek()
+    {
+        $data = Order::select('id', 'created_at')
+            ->get()
+            ->groupBy(function ($date) {
+                return Carbon::parse($date->created_at)->format('w');
+            });
+
+        $dataCount = [];
+        $dataArr = [];
+
+        foreach ($data as $key => $value) {
+            $dataCount[(int)$key] = count($value);
+        }
+
+        $day = ['Mon', 'Tues', 'Wed', 'Thurs', 'Friday'];
+
+        for ($i = 1; $i <= 5; $i++) {
+            if (!empty($dataCount[$i])) {
+                $dataArr[$i]['count'] = $dataCount[$i];
+            } else {
+                $dataArr[$i]['count'] = 0;
+            }
+            $dataArr[$i]['month'] = $day[$i - 1];
+        }
+
+        return response()->json([
+            "message" => "Success Filtered By Year",
+            "data" => array_values($dataArr)
+        ]);
+    }
+
     public function GetRecentOrder()
     {
         $data = Order::with(["menu", "user"])->orderBy("order_in_date", "desc")->take(10)->get();

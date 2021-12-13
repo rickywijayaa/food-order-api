@@ -30,6 +30,10 @@ class OrderController extends Controller
         return $this->orderRepository->FilterOrderByMonth();
     }
 
+    public function filterOrderByWeek(){
+        return $this->orderRepository->FilterOrderByWeek();
+    }
+
     public function getRecentOrder(){
         return $this->orderRepository->GetRecentOrder();
     }
