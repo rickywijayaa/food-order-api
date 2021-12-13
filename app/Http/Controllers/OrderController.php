@@ -37,4 +37,8 @@ class OrderController extends Controller
     public function getRecentOrder(){
         return $this->orderRepository->GetRecentOrder();
     }
+
+    public function getMostOrder(){
+        return $this->orderRepository->GetMostOrder();
+    }
 }

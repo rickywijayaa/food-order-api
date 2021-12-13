@@ -110,6 +110,15 @@ class OrderRepository
         ], 200);
     }
 
+    public function GetMostOrder(){
+        $data = Order::select(DB::raw('COUNT(menus_id) as cnt'))->groupBy('menus_id')->orderBy('cnt', 'DESC')->first();
+
+        return response()->json([
+            "message" => "Successfully Get Order By Id",
+            "data" => $data,
+        ], 200);
+    }
+
     public function CreateOrder($request)
     {
         $data = $request->all();
