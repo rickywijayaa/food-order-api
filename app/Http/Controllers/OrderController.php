@@ -23,7 +23,7 @@ class OrderController extends Controller
     }
 
     public function create(Request $request){
-        dd($request->all());
+        dd($request);
         return $this->orderRepository->CreateOrder($request);
     }
 
