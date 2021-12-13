@@ -28,7 +28,7 @@ class OrderRepository
         //     $q->where('id', "=", $id);
         // })->with("user","menu")->get();
 
-        $data = Order::where("menus_id", $id)->with(["menu", "user"])->get();
+        $data = Order::where("id", $id)->with(["menu", "user"])->get();
 
         return response()->json([
             "message" => "Successfully Get Order By Id",
