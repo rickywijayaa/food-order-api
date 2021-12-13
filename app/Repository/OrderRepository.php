@@ -83,9 +83,9 @@ class OrderRepository
             $dataCount[(int)$key] = count($value);
         }
 
-        $day = ['Mon', 'Tues', 'Wed', 'Thurs', 'Friday'];
+        $day = ['Mon', 'Tues', 'Wed', 'Thurs', 'Friday','Saturday','Sunday'];
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
             if (!empty($dataCount[$i])) {
                 $dataArr[$i]['count'] = $dataCount[$i];
             } else {
@@ -122,6 +122,7 @@ class OrderRepository
     public function CreateOrder($request)
     {
         $data = $request->all();
+        dd($data);
 
         $decoded_json_menu = json_decode($data['menu'], true);
 
