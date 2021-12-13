@@ -83,7 +83,7 @@ class OrderRepository
             $dataCount[(int)$key] = count($value);
         }
 
-        $day = ['Mon', 'Tues', 'Wed', 'Thurs', 'Friday','Saturday','Sunday'];
+        $day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday','Sunday'];
 
         for ($i = 1; $i <= 7; $i++) {
             if (!empty($dataCount[$i])) {
