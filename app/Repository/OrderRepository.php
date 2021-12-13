@@ -64,7 +64,7 @@ class OrderRepository
 
         return response()->json([
             "message" => "Success Filtered By Year",
-            "data" => $dataArr
+            "data" => array_values($dataArr)
         ]);
     }
 
