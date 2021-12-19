@@ -24,10 +24,6 @@ class OrderRepository
 
     public function GetOrderById($id)
     {
-        // $data = Order::whereHas('user', function($q) use ($id){
-        //     $q->where('id', "=", $id);
-        // })->with("user","menu")->get();
-
         $data = Order::where("id", $id)->with(["menu", "user"])->get();
 
         return response()->json([
@@ -111,10 +107,6 @@ class OrderRepository
     }
 
     public function GetMostOrder(){
-        // $data = Order::select(DB::raw('COUNT(menus_id) as cnt, totalPrice'))
-        // ->join("menus","menus.id","=","")        
-        // ->groupBy('menus_id')->orderBy('cnt', 'DESC')->first();
-
         $data = DB::table("orders")
                 ->selectRaw("COUNT(orders.menus_id) as total_menu, orders.totalPrice as price, menus.name")
                 ->join("menus","orders.menus_id","=","menus.id")
