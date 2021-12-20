@@ -92,7 +92,7 @@ class MenuRepository{
         $data = $request->all();
         $menu = Menu::findOrFail($id);
 
-        $decoded_json_categories = json_decode($data['categories'], true);
+        $decoded_json_categories = json_decode(json_encode($data["categories"]),true);
 
         $menu->update([
             "name" => $data["name"],
