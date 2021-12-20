@@ -80,7 +80,7 @@ class MenuRepository{
     }
 
     public function GetMenuById($id){
-        $data = Menu::findOrFail($id);
+        $data = Menu::with("category")->findOrFail($id);
 
         return response()->json([
             "message" => "Successfully Get Menu By Id",
