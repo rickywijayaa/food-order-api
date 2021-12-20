@@ -92,7 +92,7 @@ class MenuRepository{
         $data = $request->all();
         $menu = Menu::findOrFail($id);
 
-        $decoded_json_categories = json_decode(json_encode($data["categories"]),true);
+        $decoded_json_categories = json_decode($data['categories'], true);
 
         $menu->update([
             "name" => $data["name"],
@@ -117,6 +117,7 @@ class MenuRepository{
         }
 
         $dataJson = [
+            "id" => $id,
             "name" => $data["name"],
             "description" => $data["description"],
             "category" => $decoded_json_categories,
@@ -124,7 +125,7 @@ class MenuRepository{
             "image" => $request->hasFile("image") ? 
                    url("/storage")."/".$request->file('image')->store("menu","public") :
                    $menu["image"],
-            "isAvailable" => $data["isAvailable"] == "true" ? 1 : 0
+            "isAvailable" => $data["isAvailable"] == "true" || $data["isAvailable"] == "1" ? 1 : 0
        ];
 
         return response()->json([
